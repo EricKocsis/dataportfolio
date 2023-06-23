@@ -1,0 +1,78 @@
+-- Average salary by gender
+
+SELECT Gender, AVG(Salary) as Average_Salary
+FROM `case-study-386316.salary_data.salary`
+GROUP BY Gender;
+
+-- Average salary by education
+
+SELECT Education_Level, AVG(Salary) as Average_Salary
+FROM `case-study-386316.salary_data.salary`
+WHERE Education_Level IS NOT NULL
+GROUP BY Education_Level
+ORDER BY Average_Salary;
+
+-- Update uniformity of Education_Level
+SELECT *
+FROM `case-study-386316.salary_data.salary`
+WHERE Education_Level = 'phD';
+
+UPDATE `case-study-386316.salary_data.salary`
+SET Education_Level = 'PhD'
+WHERE Education_Level = 'phD';
+
+UPDATE `case-study-386316.salary_data.salary`
+SET Education_Level = "Bachelor's"
+WHERE Education_Level = "Bachelor's Degree";
+
+UPDATE `case-study-386316.salary_data.salary`
+SET Education_Level = "Master's"
+WHERE Education_Level = "Master's Degree";
+
+-- Education Level by Gender
+SELECT Education_Level, Gender, COUNT(*) AS Amount
+FROM `case-study-386316.salary_data.salary`
+WHERE Education_Level IS NOT NULL
+GROUP BY Education_Level, Gender
+ORDER BY Education_Level, Gender;
+
+-- Age by Salary
+SELECT Age, AVG(Salary) AS Average_Salary
+FROM `case-study-386316.salary_data.salary`
+GROUP BY Age
+ORDER BY Age;
+
+-- Highest paid occupations
+SELECT Job_Title, AVG(Salary) AS Average_Salary
+FROM `case-study-386316.salary_data.salary`
+GROUP BY Job_Title
+ORDER BY Average_Salary DESC
+LIMIT 10;
+
+-- Lowest paid occupations
+SELECT Job_Title, AVG(Salary) AS Average_Salary
+FROM `case-study-386316.salary_data.salary`
+WHERE Salary IS NOT NULL
+GROUP BY Job_Title
+ORDER BY Average_Salary
+LIMIT 10;
+
+-- Average salary of data analyst by gender
+SELECT AVG(Salary) AS Average_Salary, Gender
+FROM `case-study-386316.salary_data.salary`
+WHERE Job_Title = 'Data Analyst'
+GROUP BY Gender;
+
+-- Gender imbalance in data analytics
+SELECT Gender, COUNT(*) AS Amount
+FROM `case-study-386316.salary_data.salary`
+WHERE Job_Title = 'Data Analyst'
+GROUP BY Gender;
+
+-- Average salary by gender and years of experience
+SELECT Gender, AVG(Salary) AS Average_Salary, Years_of_Experience
+FROM `case-study-386316.salary_data.salary`
+WHERE Job_Title = 'Data Analyst'
+GROUP BY Gender, Years_of_Experience
+HAVING COUNT(*) > 1
+ORDER BY Years_of_Experience;
